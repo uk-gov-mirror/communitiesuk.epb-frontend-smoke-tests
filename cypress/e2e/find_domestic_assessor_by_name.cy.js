@@ -1,12 +1,12 @@
-const stage = Cypress.env('API_STAGE') || 'production'
-const isCrossOrigin = (Cypress.env(`get_service_en_${stage}`) !== Cypress.env(`get_domain_${stage}`))
+const stage = Cypress.expose('API_STAGE') || 'production'
+const isCrossOrigin = (Cypress.expose(`get_service_en_${stage}`) !== Cypress.expose(`get_domain_${stage}`))
 
 describe('Find a Domestic Assessor (English)', () => {
     it('shows assessor search results', () => {
-        cy.visit(Cypress.env(`get_service_en_${stage}`))
+        cy.visit(Cypress.expose(`get_service_en_${stage}`))
         cy.contains('Start now').click()
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`get_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`get_domain_${stage}`), () => {
                 cy.get('#label-domestic').click()
                 cy.contains('Continue').click()
                 cy.get('#label-domesticRdSap').click()
@@ -37,10 +37,10 @@ describe('Find a Domestic Assessor (English)', () => {
 
 describe('Find a Domestic Assessor (Welsh)', () => {
     it('shows assessor search results', () => {
-        cy.visit(Cypress.env(`get_service_cy_${stage}`))
+        cy.visit(Cypress.expose(`get_service_cy_${stage}`))
         cy.contains('Dechrau nawr').click()
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`get_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`get_domain_${stage}`), () => {
                 cy.get('#label-domestic').click()
                 cy.contains('Parhau').click()
                 cy.get('#label-domesticRdSap').click()

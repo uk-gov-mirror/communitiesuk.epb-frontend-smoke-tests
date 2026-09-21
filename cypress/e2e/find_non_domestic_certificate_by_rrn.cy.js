@@ -1,12 +1,12 @@
-const stage = Cypress.env('API_STAGE') || 'production'
-const isCrossOrigin = (Cypress.env(`get_service_en_${stage}`) !== Cypress.env(`get_domain_${stage}`))
+const stage = Cypress.expose('API_STAGE') || 'production'
+const isCrossOrigin = (Cypress.expose(`get_service_en_${stage}`) !== Cypress.expose(`get_domain_${stage}`))
 
 describe('Find non-domestic certificate by RRN (English)', () => {
     beforeEach(() => {
-        cy.visit(Cypress.env(`find_service_en_${Cypress.env('API_STAGE') || 'production'}`))
+        cy.visit(Cypress.expose(`find_service_en_${stage}`))
         cy.contains('Start now').click()
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                 cy.get('#label-non-domestic').click()
                 cy.contains('button', 'Continue').click()
                 cy.contains('find a certificate by using its certificate number').click()
@@ -24,7 +24,7 @@ describe('Find non-domestic certificate by RRN (English)', () => {
 
     it('shows the certificate with the expected header', () => {
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                 cy.get('body').should('contain', 'Display energy certificate (DEC)')
             })
         } else {
@@ -35,10 +35,10 @@ describe('Find non-domestic certificate by RRN (English)', () => {
 
 describe('Find non-domestic certificate by RRN (Welsh)', () => {
     beforeEach(() => {
-        cy.visit(Cypress.env(`find_service_cy_${Cypress.env('API_STAGE') || 'production'}`))
+        cy.visit(Cypress.expose(`find_service_cy_${stage}`))
         cy.contains('Dechrau nawr').click()
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                 cy.get('#label-non-domestic').click()
                 cy.contains('Parhau').click()
                 cy.contains('chwilio am dystysgrif drwy ddefnyddio’i rhif tystysgrif').click()
@@ -56,7 +56,7 @@ describe('Find non-domestic certificate by RRN (Welsh)', () => {
 
     it('shows the certificate with the expected header', () => {
         if (isCrossOrigin) {
-            cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+            cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                 cy.get('body').should('contain', 'Tystysgrif ynni i’w harddangos (DEC)')
             })
         } else {

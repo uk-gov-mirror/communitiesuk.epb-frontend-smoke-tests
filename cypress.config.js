@@ -2,7 +2,7 @@ const {defineConfig} = require('cypress')
 
 module.exports = defineConfig({
     chromeWebSecurity: false,
-    env: {
+    expose: {
         get_service_en_integration:
             'https://getting-new-energy-certificate-integration.digital.communities.gov.uk/',
         get_domain_integration: 'https://getting-new-energy-certificate-integration.digital.communities.gov.uk/',

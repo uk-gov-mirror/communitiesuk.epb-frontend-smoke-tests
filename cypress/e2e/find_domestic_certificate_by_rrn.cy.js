@@ -1,13 +1,13 @@
-const stage = Cypress.env('API_STAGE') || 'production'
-const isCrossOrigin = (Cypress.env(`get_service_en_${stage}`) !== Cypress.env(`get_domain_${stage}`))
+const stage = Cypress.expose('API_STAGE') || 'production'
+const isCrossOrigin = (Cypress.expose(`get_service_en_${stage}`) !== Cypress.expose(`get_domain_${stage}`))
 
 describe('Find domestic certificate by RRN in English', () => {
     context('when searching for a domestic certificate', () => {
         beforeEach(() => {
-            cy.visit(Cypress.env(`find_service_en_${Cypress.env('API_STAGE') || 'production'}`))
+            cy.visit(Cypress.expose(`find_service_en_${stage}`))
             cy.contains('Start now').click()
             if (isCrossOrigin) {
-                cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+                cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                     cy.get('#label-domestic').click()
                     cy.contains('button', 'Continue').click()
                     cy.contains('find an energy certificate by using its certificate number').click()
@@ -25,7 +25,7 @@ describe('Find domestic certificate by RRN in English', () => {
 
         it('shows the certificate with the expected header', () => {
             if (isCrossOrigin) {
-                cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+                cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                     cy.get('body').should('contain', 'Energy performance certificate (EPC)')
                 })
             } else {
@@ -38,10 +38,10 @@ describe('Find domestic certificate by RRN in English', () => {
 describe('Find domestic certificate by RRN in Welsh', () => {
     context('when search for a domestic certificate in Welsh', () => {
         beforeEach(() => {
-            cy.visit(Cypress.env(`find_service_cy_${Cypress.env('API_STAGE') || 'production'}`))
+            cy.visit(Cypress.expose(`find_service_cy_${stage}`))
             cy.contains('Dechrau nawr').click()
             if (isCrossOrigin) {
-                cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+                cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                     cy.get('#label-domestic').click()
                     cy.contains('Parhau').click()
                     cy.contains('ddod o hyd i dystysgrif ynni drwy ddefnyddio rhif y dystysgrif').click()
@@ -58,7 +58,7 @@ describe('Find domestic certificate by RRN in Welsh', () => {
         })
         it('shows the certificate with the expected header', () => {
             if (isCrossOrigin) {
-                cy.origin(Cypress.env(`find_domain_${stage}`), () => {
+                cy.origin(Cypress.expose(`find_domain_${stage}`), () => {
                     cy.get('body').should('contain', 'Tystysgrif perfformiad ynni (EPC)')
                 })
             } else {

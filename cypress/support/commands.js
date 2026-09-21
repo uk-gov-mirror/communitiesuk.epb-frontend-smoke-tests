@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-const COMMAND_DELAY = Cypress.env('COMMAND_DELAY') || 0
+const COMMAND_DELAY = Cypress.expose('COMMAND_DELAY') || 0
 if (COMMAND_DELAY > 0) {
   for (const command of ['visit', 'click', 'trigger', 'clear', 'reload']) {
     Cypress.Commands.overwrite(command, (originalFn, ...args) => {
